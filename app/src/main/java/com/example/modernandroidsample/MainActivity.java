@@ -1,7 +1,6 @@
 package com.example.modernandroidsample;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +20,10 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        binding.tvResult.setText(db.todoDao().getAll().toString());
+        // UI update.
+        db.todoDao().getAll().observe(MainActivity.this, todos -> binding.tvResult.setText(todos.toString()));
 
-        binding.btAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                db.todoDao().insert(new Todo(binding.etInput.getText().toString()));
-                binding.tvResult.setText(db.todoDao().getAll().toString());
-            }
-        });
+        // Insert data when click the button.
+        binding.btAdd.setOnClickListener(view -> db.todoDao().insert(new Todo(binding.etInput.getText().toString())));
     }
 }

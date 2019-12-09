@@ -10,19 +10,19 @@ public class Todo {
     private int id;
     private String title;
 
-    public Todo(String title) {
+    Todo(String title) {
         this.title = title;
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
