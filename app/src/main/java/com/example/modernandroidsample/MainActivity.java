@@ -9,6 +9,9 @@ import androidx.room.Room;
 
 import com.example.modernandroidsample.databinding.ActivityMainBinding;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,13 +20,16 @@ public class MainActivity extends AppCompatActivity {
         final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
         final AppDatabase db = Room.databaseBuilder(MainActivity.this, AppDatabase.class, "todo-db")
-                .allowMainThreadQueries()
                 .build();
 
         // UI update.
         db.todoDao().getAll().observe(MainActivity.this, todos -> binding.tvResult.setText(todos.toString()));
 
+        Runnable runnable = () -> db.todoDao().insert(new Todo(binding.etInput.getText().toString()));
+
+        Executor executor = Executors.newSingleThreadExecutor();
+
         // Insert data when click the button.
-        binding.btAdd.setOnClickListener(view -> db.todoDao().insert(new Todo(binding.etInput.getText().toString())));
+        binding.btAdd.setOnClickListener(view -> executor.execute(runnable));
     }
 }
