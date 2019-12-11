@@ -15,13 +15,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+        binding.setLifecycleOwner(MainActivity.this);
 
         MainViewModel viewModel = ViewModelProviders.of(MainActivity.this).get(MainViewModel.class);
-
-        // UI update.
-        viewModel.getAll().observe(MainActivity.this, todos -> binding.tvResult.setText(todos.toString()));
-
-        // Insert data when click the button.
-        binding.btAdd.setOnClickListener(view -> viewModel.insert(new Todo(binding.etInput.getText().toString())));
+        binding.setViewModel(viewModel);
     }
 }
