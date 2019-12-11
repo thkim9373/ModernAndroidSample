@@ -5,12 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.room.Room;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.modernandroidsample.databinding.ActivityMainBinding;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,17 +16,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
-        final AppDatabase db = Room.databaseBuilder(MainActivity.this, AppDatabase.class, "todo-db")
-                .build();
+        MainViewModel viewModel = ViewModelProviders.of(MainActivity.this).get(MainViewModel.class);
 
         // UI update.
-        db.todoDao().getAll().observe(MainActivity.this, todos -> binding.tvResult.setText(todos.toString()));
-
-        Runnable runnable = () -> db.todoDao().insert(new Todo(binding.etInput.getText().toString()));
-
-        Executor executor = Executors.newSingleThreadExecutor();
+        viewModel.getAll().observe(MainActivity.this, todos -> binding.tvResult.setText(todos.toString()));
 
         // Insert data when click the button.
-        binding.btAdd.setOnClickListener(view -> executor.execute(runnable));
+        binding.btAdd.setOnClickListener(view -> viewModel.insert(new Todo(binding.etInput.getText().toString())));
     }
 }
