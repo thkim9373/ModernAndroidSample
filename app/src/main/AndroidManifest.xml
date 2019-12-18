@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".room.RoomActivity" />
+        <activity android:name=".navigation.NavigationActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.modernandroidsample;
+package com.example.modernandroidsample.room;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

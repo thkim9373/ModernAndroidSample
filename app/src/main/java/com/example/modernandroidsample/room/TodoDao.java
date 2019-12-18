@@ -1,4 +1,4 @@
-package com.example.modernandroidsample;
+package com.example.modernandroidsample.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
