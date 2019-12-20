@@ -31,4 +31,11 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(NavigationActivity.this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavController navController = Navigation.findNavController(NavigationActivity.this, R.id.nav_host_fragment);
+        NavigationUI.navigateUp(navController, appBarConfiguration);
+    }
 }
